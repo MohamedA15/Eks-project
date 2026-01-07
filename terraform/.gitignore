@@ -1,0 +1,10 @@
+# Terraform
+**/.terraform/
+*.tfstate
+*.tfstate.*
+
+# Terraform lock file (ignore for bootstrap)
+**/.terraform.lock.hcl
+
+# macOS
+.DS_Store
