@@ -69,21 +69,5 @@ resource "aws_route_table_association" "private_assoc" {
   route_table_id = aws_route_table.private.id
 }
 
-# NAT EIP 
-resource "aws_eip" "nat" {}
 
-# NAT Gateway 
-resource "aws_nat_gateway" "this" {
-  allocation_id = aws_eip.nat.id
-  subnet_id     = aws_subnet.public[0].id
-
-  depends_on = [aws_internet_gateway.this]
-}
-
-# Private route via NAT
-resource "aws_route" "private_nat" {
-  route_table_id         = aws_route_table.private.id
-  destination_cidr_block = "0.0.0.0/0"
-  nat_gateway_id         = aws_nat_gateway.this.id
-}
 
