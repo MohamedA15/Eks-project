@@ -18,8 +18,3 @@ variable "private_subnet_cidrs" {
   type = list(string)
 }
 
-variable "single_nat_gateway" {
-  description = "Use one NAT Gateway instead of one per AZ"
-  type        = bool
-  default     = false
-}
