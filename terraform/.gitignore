@@ -8,3 +8,7 @@
 
 # macOS
 .DS_Store
+
+
+terraform.tfvars
+*.tfvars

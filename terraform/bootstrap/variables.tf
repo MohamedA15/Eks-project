@@ -8,3 +8,7 @@ variable "region" {
   type    = string
   default = "eu-west-2"
 }
+
+variable "ecr_repo_name" {
+  type = string
+}
