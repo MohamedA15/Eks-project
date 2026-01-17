@@ -44,3 +44,18 @@ output "eks_cluster_role_arn" {
   description = "IAM role ARN used by the EKS control plane"
   value       = aws_iam_role.eks_cluster.arn
 }
+
+output "node_group_name" {
+  description = "Name of the default EKS node group"
+  value       = aws_eks_node_group.default.node_group_name
+}
+
+output "node_group_arn" {
+  description = "ARN of the default EKS node group"
+  value       = aws_eks_node_group.default.arn
+}
+
+output "node_group_role_arn" {
+  description = "IAM role ARN used by worker nodes"
+  value       = aws_iam_role.eks_node_role.arn
+}

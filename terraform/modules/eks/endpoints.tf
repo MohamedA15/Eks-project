@@ -47,21 +47,6 @@ resource "aws_vpc_endpoint" "ecr_dkr" {
 
 
 
-resource "aws_eks_cluster" "this" {
-  name     = var.cluster_name
-  version  = var.cluster_version
-  role_arn = aws_iam_role.eks_cluster.arn
-
- vpc_config {
-  subnet_ids              = var.subnet_ids
-  security_group_ids      = var.security_group_ids
-  endpoint_private_access = var.endpoint_private_access
-  endpoint_public_access  = var.endpoint_public_access
-}
-
-}
-
-
 resource "aws_vpc_endpoint" "logs" {
   vpc_id              = var.vpc_id
   service_name        = "com.amazonaws.${var.region}.logs"
