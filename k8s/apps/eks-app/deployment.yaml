@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eks-app
+  namespace: eks-app
+  labels:
+    app: eks-app
+spec:
+  replicas: 2
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: eks-app
+  template:
+    metadata:
+      labels:
+        app: eks-app
+    spec:
+      serviceAccountName: eks-app-sa
+      containers:
+        - name: eks-app
+          image: 688372068827.dkr.ecr.eu-west-2.amazonaws.com/eks-app:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+
+
+          # Resource management 
+
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "256Mi"
+
+
+          # Health checks
+
+          readinessProbe:
+            httpGet:
+              path: /_health
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 3
+
+          livenessProbe:
+            httpGet:
+              path: /_health
+              port: 80
+            initialDelaySeconds: 15
+            periodSeconds: 20
+            timeoutSeconds: 2
+            failureThreshold: 3
