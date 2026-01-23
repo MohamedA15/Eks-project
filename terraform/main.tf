@@ -29,3 +29,15 @@ module "eks" {
   region      = var.region
   environment = "prod"
 }
+
+
+module "bastion" {
+  source    = "./modules/ec2"
+
+  name      = "eks-admin"
+  vpc_id    = module.vpc.vpc_id
+  subnet_id = module.vpc.public_subnet_ids[0]
+
+  ssh_cidr  = var.ssh_cidr
+  key_name  = var.key_name
+}
