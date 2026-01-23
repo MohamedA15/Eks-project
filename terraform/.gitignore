@@ -12,3 +12,5 @@
 
 terraform.tfvars
 *.tfvars
+
+*.pem
