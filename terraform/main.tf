@@ -26,18 +26,20 @@ module "eks" {
   endpoint_private_access = true
   endpoint_public_access  = false
 
+
+  bastion_role_arn = module.ec2.iam_role_arn
+
   region      = var.region
   environment = "prod"
 }
 
 
-module "bastion" {
-  source    = "./modules/ec2"
+module "ec2" {
+  source = "./modules/ec2"
 
-  name      = "eks-admin"
+  name          = var.cluster_name
+  instance_type = "t3.micro"
+
   vpc_id    = module.vpc.vpc_id
   subnet_id = module.vpc.public_subnet_ids[0]
-
-  ssh_cidr  = var.ssh_cidr
-  key_name  = var.key_name
 }

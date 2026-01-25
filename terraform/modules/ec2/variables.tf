@@ -10,14 +10,6 @@ variable "subnet_id" {
   type = string
 }
 
-variable "ssh_cidr" {
-  type = string
-}
-
-variable "key_name" {
-  type = string
-}
-
 variable "instance_type" {
   type    = string
   default = "t3.micro"

@@ -1,14 +1,7 @@
 resource "aws_security_group" "bastion" {
   name        = "${var.name}-bastion-sg"
-  description = "SSH access to bastion"
+  description = "Security group for bastion instance"
   vpc_id      = var.vpc_id
-
-  ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = [var.ssh_cidr]
-  }
 
   egress {
     from_port   = 0

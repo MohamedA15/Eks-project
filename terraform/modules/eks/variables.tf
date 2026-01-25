@@ -52,6 +52,11 @@ variable "endpoint_public_access" {
   default     = false
 }
 
+variable "bastion_role_arn" {
+  description = "IAM role ARN of the bastion instance for EKS access"
+  type        = string
+}
+
 ############################
 # AWS Region
 ############################
