@@ -1,0 +1,17 @@
+.git
+.gitignore
+
+README.md
+CONTRIBUTING.md
+LICENSE.txt
+
+meta/
+Rakefile
+package-lock.json
+
+node_modules/
+dist/
+build/
+
+*.log
+.DS_Store
