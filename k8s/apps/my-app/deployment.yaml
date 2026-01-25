@@ -22,10 +22,7 @@ spec:
           image: 688372068827.dkr.ecr.eu-west-2.amazonaws.com/eks-app:latest
           imagePullPolicy: Always
           ports:
-            - containerPort: 80
-
-
-          # Resource management 
+            - containerPort: 8080
 
           resources:
             requests:
@@ -34,24 +31,3 @@ spec:
             limits:
               cpu: "500m"
               memory: "256Mi"
-
-
-          # Health checks
-
-          readinessProbe:
-            httpGet:
-              path: /_health
-              port: 80
-            initialDelaySeconds: 5
-            periodSeconds: 10
-            timeoutSeconds: 2
-            failureThreshold: 3
-
-          livenessProbe:
-            httpGet:
-              path: /_health
-              port: 80
-            initialDelaySeconds: 15
-            periodSeconds: 20
-            timeoutSeconds: 2
-            failureThreshold: 3
