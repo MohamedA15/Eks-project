@@ -26,12 +26,13 @@ module "eks" {
   endpoint_private_access = true
   endpoint_public_access  = false
 
-
-  bastion_role_arn = module.ec2.iam_role_arn
+  bastion_role_arn         = module.ec2.iam_role_arn
+  terraform_admin_role_arn = var.terraform_admin_role_arn   # 👈 ADD THIS
 
   region      = var.region
   environment = "prod"
 }
+
 
 
 module "ec2" {
