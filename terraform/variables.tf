@@ -38,3 +38,9 @@ variable "cluster_version" {
   type    = string
   default = "1.29"
 }
+
+variable "terraform_admin_role_arn" {
+  description = "IAM role ARN used by Terraform to administer EKS"
+  type        = string
+}
+
