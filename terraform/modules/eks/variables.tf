@@ -112,3 +112,9 @@ variable "environment" {
   type        = string
   default     = "production"
 }
+
+
+variable "terraform_admin_role_arn" {
+  description = "IAM role ARN used by Terraform to administer the EKS cluster"
+  type        = string
+}
