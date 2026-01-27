@@ -1,0 +1,25 @@
+controller:
+  # Use private ECR images
+  image:
+    registry: 688372068827.dkr.ecr.eu-west-2.amazonaws.com
+    image: ingress-nginx/controller
+    tag: v1.9.6
+
+  admissionWebhooks:
+    patch:
+      image:
+        registry: 688372068827.dkr.ecr.eu-west-2.amazonaws.com
+        image: ingress-nginx/admission
+        tag: v1.4.0
+
+  # Create the default ingressClass "nginx"
+  ingressClassResource:
+    name: nginx
+    enabled: true
+    default: true
+
+
+  replicaCount: 2
+
+  service:
+    type: LoadBalancer
