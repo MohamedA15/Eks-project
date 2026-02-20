@@ -1,3 +1,7 @@
+########################################
+# EKS CLUSTER
+########################################
+
 resource "aws_eks_cluster" "this" {
   name     = var.cluster_name
   version  = var.cluster_version
@@ -25,25 +29,29 @@ resource "aws_eks_cluster" "this" {
   ]
 }
 
-resource "aws_eks_access_entry" "bastion" {
-  cluster_name  = aws_eks_cluster.this.name
-  principal_arn = var.bastion_role_arn
-  type          = "STANDARD"
+########################################
+# OIDC PROVIDER (IRSA ENABLEMENT)
+########################################
+
+data "aws_eks_cluster" "this" {
+  name = aws_eks_cluster.this.name
 }
 
-
-resource "aws_eks_access_policy_association" "bastion_admin" {
-  cluster_name  = aws_eks_cluster.this.name
-  principal_arn = var.bastion_role_arn
-  policy_arn    = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
-
-  access_scope {
-    type = "cluster"
-  }
-
-  depends_on = [aws_eks_access_entry.bastion]
+data "tls_certificate" "eks" {
+  url = data.aws_eks_cluster.this.identity[0].oidc[0].issuer
 }
 
+resource "aws_iam_openid_connect_provider" "eks" {
+  client_id_list  = ["sts.amazonaws.com"]
+  thumbprint_list = [
+    data.tls_certificate.eks.certificates[0].sha1_fingerprint
+  ]
+  url = data.aws_eks_cluster.this.identity[0].oidc[0].issuer
+}
+
+########################################
+# TERRAFORM ADMIN ACCESS
+########################################
 
 resource "aws_eks_access_entry" "terraform_admin" {
   cluster_name  = aws_eks_cluster.this.name
@@ -60,5 +68,31 @@ resource "aws_eks_access_policy_association" "terraform_admin_admin" {
     type = "cluster"
   }
 
-  depends_on = [aws_eks_access_entry.terraform_admin]
+  depends_on = [
+    aws_eks_access_entry.terraform_admin
+  ]
+}
+
+########################################
+# BASTION ACCESS
+########################################
+
+resource "aws_eks_access_entry" "bastion" {
+  cluster_name  = aws_eks_cluster.this.name
+  principal_arn = var.bastion_role_arn
+  type          = "STANDARD"
+}
+
+resource "aws_eks_access_policy_association" "bastion_admin" {
+  cluster_name  = aws_eks_cluster.this.name
+  principal_arn = var.bastion_role_arn
+  policy_arn    = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+
+  access_scope {
+    type = "cluster"
+  }
+
+  depends_on = [
+    aws_eks_access_entry.bastion
+  ]
 }
