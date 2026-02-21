@@ -1,16 +1,33 @@
+# ----------------------------
 # Terraform
-**/.terraform/
+# ----------------------------
+
+# State files
 *.tfstate
 *.tfstate.*
+crash.log
 
-# Terraform lock file (ignore for bootstrap)
-**/.terraform.lock.hcl
+# Terraform directories
+.terraform/
 
-# macOS
-.DS_Store
-
-
-terraform.tfvars
+# Variable files (secrets)
 *.tfvars
+terraform.tfvars
 
+# Plan files
+*.tfplan
+
+# CLI config
+.terraformrc
+terraform.rc
+
+# ----------------------------
+# Sensitive / Keys
+# ----------------------------
 *.pem
+*.key
+
+# ----------------------------
+# macOS
+# ----------------------------
+.DS_Store

@@ -44,3 +44,9 @@ variable "terraform_admin_role_arn" {
   type        = string
 }
 
+
+variable "bastion_role_arn" {
+  type        = string
+  default     = null
+  description = "IAM role ARN for bastion access (optional until bastion exists)"
+}

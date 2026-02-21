@@ -26,27 +26,9 @@ module "eks" {
   endpoint_private_access = true
   endpoint_public_access  = false
 
-  bastion_role_arn         = module.ec2.iam_role_arn
-  terraform_admin_role_arn = var.terraform_admin_role_arn   # 👈 ADD THIS
+  bastion_role_arn         = var.bastion_role_arn
+  terraform_admin_role_arn = var.terraform_admin_role_arn
 
   region      = var.region
   environment = "prod"
-}
-
-
-
-module "ec2" {
-  source = "./modules/ec2"
-
-  name          = var.cluster_name
-  instance_type = "t3.micro"
-
-  vpc_id    = module.vpc.vpc_id
-  subnet_id = module.vpc.public_subnet_ids[0]
-}
-
-
-module "helm" {
-  source       = "./modules/helm"
-  cluster_name = module.eks.cluster_name
 }
