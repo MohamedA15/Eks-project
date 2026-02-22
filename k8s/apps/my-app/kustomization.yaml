@@ -6,3 +6,4 @@ namespace: eks-app
 resources:
   - deployment.yaml
   - service.yaml
+  - ingress.yaml
