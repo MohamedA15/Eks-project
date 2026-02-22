@@ -3,10 +3,19 @@ kind: Ingress
 metadata:
   name: eks-app
   namespace: eks-app
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
   ingressClassName: nginx
+
+  tls:
+    - hosts:
+        - app.moamiin.org
+      secretName: eks-app-tls
+
   rules:
-    - http:
+    - host: app.moamiin.org
+      http:
         paths:
           - path: /
             pathType: Prefix
