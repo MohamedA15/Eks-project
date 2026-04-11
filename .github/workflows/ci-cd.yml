@@ -59,3 +59,5 @@ jobs:
           git add ${{ env.DEPLOYMENT_FILE }}
           git commit -m "ci: update image tag to ${{ steps.build.outputs.image_tag }}"
           git push
+
+          
