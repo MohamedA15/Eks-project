@@ -19,7 +19,7 @@ spec:
       serviceAccountName: eks-app-sa
       containers:
         - name: eks-app
-          image: 688372068827.dkr.ecr.eu-west-2.amazonaws.com/eks-app:f38b9204257383fafc5e35bca18e8ef96fe158a2
+          image: 688372068827.dkr.ecr.eu-west-2.amazonaws.com/eks-app:77073b9a537d4f683f9f283a7d26762e6a30a13e
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
