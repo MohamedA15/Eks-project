@@ -18,7 +18,8 @@ env:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    if: github.actor != 'github-actions[bot]'
+    if: "!contains(github.event.head_commit.message, 'ci: update image tag')"
+    
 
     steps:
       - name: Checkout code
