@@ -51,6 +51,9 @@ jobs:
           fail-build: true
           severity-cutoff: critical
           only-fixed: true
+        env:
+          GRYPE_DB_AUTO_UPDATE: true
+          GRYPE_DB_MAX_ALLOWED_BUILT_AGE: 720h
 
       - name: Push Docker image to ECR
         run: docker push ${{ steps.build.outputs.image_uri }}
